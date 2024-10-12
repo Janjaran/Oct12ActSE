@@ -25,7 +25,7 @@ function seeAllPlayersRecords($pdo) {
 }
 
 function getPlayerById($pdo, $player_id) {
-    $sql = "SELECT * FROM esports_players WHERE player_id = ?";
+    $sql = "SELECT * FROM esports_players WHERE id = ?";
     $stmt = $pdo->prepare($sql);
     $executeQuery = $stmt->execute([$player_id]);
 
@@ -35,16 +35,14 @@ function getPlayerById($pdo, $player_id) {
 }
 
 function updateEsportsPlayer($pdo, $player_id, $username, $email, $game_name, $game_type, $team_name, $bio) {
-
     $sql = "UPDATE esports_players
-                SET username = ?,
-                    email = ?,
-                    game_name = ?,
-                    game_type = ?,
-                    team_name = ?,
-                    bio = ?
-                WHERE player_id = ?
-            ";
+            SET username = ?,
+                email = ?,
+                game_name = ?,
+                game_type = ?,
+                team_name = ?,
+                bio = ?
+            WHERE id = ?"; 
 
     $stmt = $pdo->prepare($sql);
     $executeQuery = $stmt->execute([$username, $email, $game_name, $game_type, $team_name, $bio, $player_id]);
@@ -52,14 +50,14 @@ function updateEsportsPlayer($pdo, $player_id, $username, $email, $game_name, $g
     if ($executeQuery) {
         return true;
     }
-
 }
 
-function deleteEsportsPlayer($pdo, $player_id) {
-    $sql = "DELETE FROM esports_players WHERE player_id = ?";
+
+function deleteEsportsPlayer($pdo, $id) { 
+    $sql = "DELETE FROM esports_players WHERE id = ?"; 
     $stmt = $pdo->prepare($sql);
     
-    $executeQuery = $stmt->execute([$player_id]);
+    $executeQuery = $stmt->execute([$id]); 
     
     if ($executeQuery) {
         return true;

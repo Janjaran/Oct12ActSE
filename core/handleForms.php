@@ -20,20 +20,26 @@ if (isset($_POST['insertNewPlayerBtn'])) {
 
 // Edit/Update esports player record
 if (isset($_POST['editPlayerBtn'])) {
+    // Fetch data from the form
     $username = $_POST['username'];
     $email = $_POST['email'];
     $game_name = $_POST['game_name'];
     $game_type = $_POST['game_type'];
     $team_name = $_POST['team_name'];
     $bio = $_POST['bio'];
-    $player_id = $_POST['player_id'];
+    $player_id = $_POST['player_id']; 
 
+    
     $executeQuery = updateEsportsPlayer($pdo, $player_id, $username, $email, $game_name, $game_type, $team_name, $bio);
 
     if ($executeQuery) {
         header("Location: ../index.php");
+        exit; 
+    } else {
+        echo "Error updating player information.";
     }
 }
+
 
 // Delete esports player record
 if (isset($_POST['deletePlayerBtn'])) {

@@ -2,11 +2,16 @@
 require_once 'core/dbConfig.php';
 require_once 'core/models.php';
 
-if (isset($_GET['player_id'])) {
-    $playerRecord = getPlayerById($pdo, $_GET['player_id']);
+if (isset($_GET['id'])) { 
+    $playerRecord = getPlayerById($pdo, $_GET['id']);
+    
+    if (!$playerRecord) {
+        echo "Player not found.";
+        exit; 
+    }
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,12 +21,12 @@ if (isset($_GET['player_id'])) {
 	<title>Edit eSports Player</title>
 </head>
 <body>
-	<form action="core/handleForms.php" method="POST">
-		<input type="hidden" name="player_id" value="<?php echo $_GET['player_id']; ?>">
-		<p>
-			<label for="username">Username</label> 
-			<input type="text" name="username" value="<?php echo $playerRecord['username'];?>">
-		</p>
+<form action="core/handleForms.php" method="POST">
+    <input type="hidden" name="player_id" value="<?php echo $playerRecord['id']; ?>">
+    <p>
+        <label for="username">Username</label> 
+        <input type="text" name="username" value="<?php echo $playerRecord['username'];?>">
+    </p>
 		<p>
 			<label for="email">Email</label> 
 			<input type="email" name="email" value="<?php echo $playerRecord['email'];?>">
